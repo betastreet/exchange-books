@@ -36,11 +36,9 @@ services:
       MYSQL_DATABASE: "database"
     mem_limit: 512m
     volumes:
-      - ./app:/app
+      - ./app/lib:/opt/books/lib
     expose:
       - 3000
-    ports:
-      - "3000:3000"
     networks:
       - front-tier
       - back-tier
