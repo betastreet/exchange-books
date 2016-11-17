@@ -1,7 +1,27 @@
 ## list
-curl -X "GET" "http://books.exchange.dev/" \
-     -H "Content-Type: application/json; charset=utf-8" \
+curl -X "GET" "http://localhost:3000/"
 
 ## get
-curl -X "GET" "http://books.exchange.dev/US460b52d5e0c13f208ac9c592dfc1e13a" \
+curl -X "GET" "http://localhost:3000/BO4082208304dd7049b67222396006d7fe"
+
+## get by author
+curl -X "GET" "http://localhost:3000/author/AU42c611595f9da62c99f7e061f8df1ff2" \
      -H "Content-Type: application/json; charset=utf-8" \
+
+## create
+curl -X "POST" "http://localhost:3000/" \
+     -H "Content-Type: application/json; charset=utf-8" \
+     -d "{\"title\":\"My Book\",\"author_id\":\"AU42c611595f9da62c99f7e061f8df1ff2\"}"
+
+## import
+curl -X "POST" "http://localhost:3000/import" \
+     -H "Content-Type: application/json; charset=utf-8" \
+     -d "[{\"title\":\"Book 1\",\"author_id\":\"AU42c611595f9da62c99f7e061f8df1ff3\"},{\"title\":\"Book 2\",\"author_id\":\"AU42c611595f9da62c99f7e061f8df1ff4\"},{\"title\":\"Book 3\",\"author_id\":\"AU42c611595f9da62c99f7e061f8df1ff5\"}]"
+
+## update
+curl -X "PUT" "http://localhost:3000/BO4082208304dd7049b67222396006d7fe" \
+     -H "Content-Type: application/json; charset=utf-8" \
+     -d "{\"title\":\"Book Updated\",\"author_id\":\"AU42c611595f9da62c99f7e061f8df1ff2\"}"
+
+## delete
+curl -X "DELETE" "http://localhost:3000/BO4a87fac0906bfcf2aa00de7a7c4f3276"
