@@ -1,12 +1,20 @@
 ## Development Environment Instructions
 
-- ensure the latest version of Docker is installed
+- Ensure the latest version of Docker is installed
 - Navigate to the project directory
-- copy docker-compose.override.example to docker-compose.override.yml and modify as needed
+- Run "npm install" int the app directory
+- Copy docker-compose.override.example to docker-compose.override.yml and modify as needed
 - Run "docker-compose -p books up -d" to bring up the containers
 - Run "docker-compose -p books ps" to list the containers
 - Run "docker exec -it books_api_1 sh" to run commands in a container's shell
+- Run "docker exec -it books_database_1 mysql -uuser -ppassword" to enter the database command line.
 - Run "docker-compose -p books stop" to stop the containers
+
+You may need to run the following to migrate and run seeds:
+
+- Run "docker exec -it books_api_1 sh" to enter the API container's shell
+- Run "NODE_PATH=./lib ./node_modules/knex/bin/cli.js migrate:latest" to run migrations
+- Run "NODE_PATH=./lib ./node_modules/knex/bin/cli.js seed:run" to seed
 
 ## Endpoints
 

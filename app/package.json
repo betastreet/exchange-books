@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_PATH=./lib npm run watch:server | node_modules/.bin/bunyan -j -o short",
-    "migrate": "NODE_PATH=./lib node_modules/knex/bin/cli migrate:latest && NODE_PATHJ=./lib npm run start",
-    "seed": "NODE_PATH=./lib node_modules/knex/bin/cli seed:run",
+    "migrate": "NODE_PATH=./lib ./node_modules/knex/bin/cli.js migrate:latest && NODE_PATHJ=./lib npm run start",
+    "seed": "NODE_PATH=./lib ./node_modules/knex/bin/cli.js seed:run",
     "watch:server": "DEBUG=*,-nodemon:watch node_modules/.bin/nodemon index.js --ignore node_modules",
     "test": "NODE_PATH=./lib NODE_ENV=test node_modules/.bin/jest --watch",
     "production": "NODE_PATH=./lib NODE_ENV=production node_modules/.bin/pm2 index.js"
@@ -30,7 +30,7 @@
     "knex": "^0.12.6",
     "mysql": "^2.11.1",
     "node-restify-validation": "^1.0.5",
-    "bookshelf-prefixed-ordered-uuid": "^0.1.1",
+    "bookshelf-prefixed-ordered-uuid": "^1.0.0",
     "pm2": "^2.0.19",
     "restify": "^4.2.0"
   },
