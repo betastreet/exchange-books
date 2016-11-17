@@ -1,0 +1,7 @@
+## list
+curl -X "GET" "http://books.exchange.dev/" \
+     -H "Content-Type: application/json; charset=utf-8" \
+
+## get
+curl -X "GET" "http://books.exchange.dev/US460b52d5e0c13f208ac9c592dfc1e13a" \
+     -H "Content-Type: application/json; charset=utf-8" \

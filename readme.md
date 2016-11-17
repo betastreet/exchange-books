@@ -7,3 +7,7 @@
 - Run "docker-compose -p books ps" to list the containers
 - Run "docker exec -it books_api_1 sh" to run commands in a container's shell
 - Run "docker-compose -p books stop" to stop the containers
+
+## Endpoints
+
+See [endpoints.curl](endpoints.curl).

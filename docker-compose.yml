@@ -8,14 +8,6 @@ networks:
 
 services:
 
-  redis:
-    hostname: redis
-    image: redis:3-alpine
-    expose:
-      - 6379
-    networks:
-      - back-tier
-
   database:
     hostname: database
     environment:
@@ -33,7 +25,8 @@ services:
     mem_limit: 512m
 
   api:
-    build: ./
+    env_file: .env
+    build: ./app
     command: npm run start
     environment:
       PORT: 3000
@@ -41,14 +34,13 @@ services:
       MYSQL_USER: "user"
       MYSQL_PASSWORD: "password"
       MYSQL_DATABASE: "database"
-      REDIS_HOST: "redis"
     mem_limit: 512m
     volumes:
       - ./app:/app
     expose:
       - 3000
     ports:
-      - "3331:3000"
+      - "3000:3000"
     networks:
       - front-tier
       - back-tier
@@ -57,5 +49,4 @@ services:
         max-size: "1m"
         max-file: "2"
     links:
-      - redis
       - database

@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development npm run watch:server",
+    "start": "NODE_PATH=./lib npm run watch:server | node_modules/.bin/bunyan -j -o short",
+    "migrate": "NODE_PATH=./lib node_modules/knex/bin/cli migrate:latest && NODE_PATHJ=./lib npm run start",
+    "seed": "NODE_PATH=./lib node_modules/knex/bin/cli seed:run",
     "watch:server": "DEBUG=*,-nodemon:watch node_modules/.bin/nodemon index.js --ignore node_modules",
-    "test": "NODE_ENV=test node_modules/.bin/jest --watch",
-    "production": "NODE_ENV=production node_modules/.bin/pm2 index.js"
+    "test": "NODE_PATH=./lib NODE_ENV=test node_modules/.bin/jest --watch",
+    "production": "NODE_PATH=./lib NODE_ENV=production node_modules/.bin/pm2 index.js"
   },
   "keywords": [],
   "author": "",
@@ -21,15 +23,30 @@
     "nodemon": "^1.11.0"
   },
   "dependencies": {
-    "amqplib": "^0.4.2",
     "bookshelf": "^0.10.2",
+    "bookshelf-paranoia": "^0.9.0",
     "bunyan": "^1.8.4",
     "debug": "^2.2.0",
-    "dotenv": "^2.0.0",
     "knex": "^0.12.6",
     "mysql": "^2.11.1",
+    "node-restify-validation": "^1.0.5",
+    "bookshelf-prefixed-ordered-uuid": "^0.1.1",
     "pm2": "^2.0.19",
-    "redis": "^2.6.2",
     "restify": "^4.2.0"
+  },
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "rules": {
+      "no-use-before-define": 0,
+      "no-underscore-dangle": 0,
+      "indent": ["error", 4],
+      "import/no-unresolved": 0,
+      "import/no-extraneous-dependencies": 0,
+      "import/extensions": 0,
+      "no-param-reassign": [2, {
+        "props": false
+      }]
+    }
   }
 }
+

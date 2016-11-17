@@ -1,0 +1,12 @@
+{
+  "consul": "consul:8500",
+  "services": [
+    {
+      "name": "books",
+      "port": 3000,
+      "poll": 3,
+      "ttl": 10
+    }
+  ],
+  "backends": []
+}
