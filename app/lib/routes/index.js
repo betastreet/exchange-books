@@ -129,7 +129,9 @@ module.exports = function routes(server) {
 };
 
 function genericResponse(req, res) {
-    res.send({
+    const response = {
         data: res.data,
-    });
+        pagination: res.pagination,
+    };
+    res.send(response);
 }

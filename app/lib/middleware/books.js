@@ -13,8 +13,9 @@ module.exports = {
 };
 
 function getBooks(req, res, next) {
-    Book.fetchAll().then((books) => {
-        res.data = books;
+    Book.fetchPage({ page: req.query.page || 1, pageSize: req.query.limit || 10 }).then((books) => {
+        res.data = books.models;
+        res.pagination = books.pagination;
         return next();
     });
 }
