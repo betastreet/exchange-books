@@ -47,6 +47,11 @@
         "props": false
       }]
     }
+  },
+  "jest": {
+    "bail": true,
+    "collectCoverage": true,
+    "verbose": true
   }
 }
 
