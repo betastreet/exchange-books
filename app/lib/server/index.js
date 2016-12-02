@@ -8,14 +8,14 @@ const serverConfig = {
     log,
 };
 
-module.exports = createServer;
+module.exports = exports = createServer;
 
 function createServer() {
     const server = restify.createServer(serverConfig);
 
     server
-        .on('error', onError)
-        .on('listening', onListening)
+        .on('error', exports.onError)
+        .on('listening', exports.onListening)
         .pre((req, res, next) => {
             req.log.info({ req }, 'start');
             return next();
@@ -23,13 +23,6 @@ function createServer() {
         .use(restify.requestLogger())
         .use(restify.queryParser())
         .use(restify.bodyParser())
-        .use((req, res, next) => {
-            if (req.path() === '/favicon.ico') {
-                res.setHeader('content-type', 'image/x-icon');
-                return res.send();
-            }
-            return next();
-        })
         .use(restifyValidation.validationPlugin({
             errorsAsArray: true,
             forbidUndefinedVariables: false,
@@ -42,12 +35,16 @@ function createServer() {
 
 // -------------------------------------
 
-function onError(err) {
+exports.onError = function onError(err) {
     log.error(err);
 
-    throw new Error(err);
+    const ServerError = Error;
+
+    throw new ServerError(err);
 }
 
-function onListening() {
+exports.onListening = function onListening() {
     log.info(`Listening on port ${process.env.PORT}`);
+
+    return true;
 }
