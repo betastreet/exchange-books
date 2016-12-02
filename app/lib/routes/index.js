@@ -8,7 +8,7 @@ module.exports = function routes(server) {
      *
      * @apiSuccess {Object} response Response data
      */
-    server.get({ url: '/' },
+    server.get('/',
         books.getBooks,
         genericResponse);
 
@@ -21,31 +21,21 @@ module.exports = function routes(server) {
      *
      * @apiSuccess {Object} response Response data
      */
-    server.get({ url: '/:id',
-        validation: {
-            resources: {
-                id: { isRequired: true },
-            },
-        } },
+    server.get('/:id',
         books.getBook,
         genericResponse);
 
     /**
-     * @api {get} / Get one book by author
-     * @apiName GetBookByAuthor
+     * @api {get} / Get books by author
+     * @apiName GetBooksByAuthor
      * @apiGroup Books
      *
-     * @apiParam {String} author Book author address
+     * @apiParam {String} author Book author ID
      *
      * @apiSuccess {Object} response Response data
      */
-    server.get({ url: '/author/:author_id',
-        validation: {
-            resources: {
-                author_id: { isRequired: true },
-            },
-        } },
-        books.getBookByAuthor,
+    server.get('/author/:author_id',
+        books.getBooksByAuthor,
         genericResponse);
 
     /**
@@ -58,13 +48,7 @@ module.exports = function routes(server) {
      *
      * @apiSuccess {Object} response Response data
      */
-    server.post({ url: '/',
-        validation: {
-            content: {
-                title: { isRequired: true },
-                author_id: { isRequired: true },
-            },
-        } },
+    server.post('/',
         books.createBook,
         genericResponse);
 
@@ -75,13 +59,7 @@ module.exports = function routes(server) {
      *
      * @apiSuccess {Object} response Response data
      */
-    server.post({ url: '/import',
-        validation: {
-            content: {
-                title: { isRequired: true },
-                author_id: { isRequired: true },
-            },
-        } },
+    server.post('/import',
         books.importBooks,
         genericResponse);
 
@@ -96,16 +74,7 @@ module.exports = function routes(server) {
      *
      * @apiSuccess {Object} response Response data
      */
-    server.put({ url: '/:id',
-        validation: {
-            resources: {
-                id: { isRequired: true },
-            },
-            content: {
-                title: { isRequired: true },
-                author_id: { isRequired: true },
-            },
-        } },
+    server.put('/:id',
         books.updateBook,
         genericResponse);
 
@@ -118,12 +87,7 @@ module.exports = function routes(server) {
      *
      * @apiSuccess {Object} response Response data
      */
-    server.del({ url: '/:id',
-        validation: {
-            resources: {
-                id: { isRequired: true },
-            },
-        } },
+    server.del('/:id',
         books.deleteBook,
         genericResponse);
 };
