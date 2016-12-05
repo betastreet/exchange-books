@@ -20,7 +20,8 @@
     "eslint-plugin-import": "^2.0.1",
     "eslint_d": "^4.2.0",
     "jest": "^16.0.2",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "supertest": "^2.0.1"
   },
   "dependencies": {
     "bookshelf": "^0.10.2",
@@ -49,6 +50,10 @@
         "props": false
       }]
     }
+  },
+  "jest": {
+    "bail": true,
+    "collectCoverage": true
   }
 }
 

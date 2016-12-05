@@ -41,10 +41,10 @@ exports.onError = function onError(err) {
     const ServerError = Error;
 
     throw new ServerError(err);
-}
+};
 
 exports.onListening = function onListening() {
     log.info(`Listening on port ${process.env.PORT}`);
 
     return true;
-}
+};
