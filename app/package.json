@@ -20,17 +20,20 @@
     "eslint-plugin-import": "^2.0.1",
     "eslint_d": "^4.2.0",
     "jest": "^16.0.2",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "supertest": "^2.0.1"
   },
   "dependencies": {
     "bookshelf": "^0.10.2",
+    "bookshelf-modelbase": "^2.10.2",
     "bookshelf-paranoia": "^0.9.0",
+    "bookshelf-prefixed-ordered-uuid": "^1.1.0",
     "bunyan": "^1.8.4",
     "debug": "^2.2.0",
+    "joi": "^10.0.1",
     "knex": "^0.12.6",
     "mysql": "^2.11.1",
     "node-restify-validation": "^1.0.5",
-    "bookshelf-prefixed-ordered-uuid": "^1.0.1",
     "pm2": "^2.0.19",
     "restify": "^4.2.0"
   },
@@ -47,6 +50,10 @@
         "props": false
       }]
     }
+  },
+  "jest": {
+    "bail": true,
+    "collectCoverage": true
   }
 }
 

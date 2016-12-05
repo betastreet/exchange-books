@@ -3,8 +3,6 @@ version: "2"
 networks:
   back-tier:
     driver: bridge
-  front-tier:
-    driver: bridge
 
 services:
 
@@ -40,7 +38,6 @@ services:
     expose:
       - 3000
     networks:
-      - front-tier
       - back-tier
     logging:
       options:
