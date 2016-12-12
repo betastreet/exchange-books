@@ -1,6 +1,6 @@
 const bookshelf = require('database');
 const ModelBase = require('bookshelf-modelbase')(bookshelf);
-const Joi = require('joi');
+const Joi = require('validation');
 
 const orderedUuidPrefix = 'BO';
 
@@ -10,14 +10,8 @@ module.exports = ModelBase.extend({
     orderedUuidPrefix,
     softDelete: true,
     validate: {
-        id: Joi.alternatives().try(
-            Joi.binary().length(18),
-            Joi.string().regex(bookshelf.Model.prefixedUuidRegex(orderedUuidPrefix))
-        ),
-        author_id: Joi.alternatives().try(
-            Joi.binary().length(18),
-            Joi.string().regex(bookshelf.Model.prefixedUuidRegex('AU'))
-        ).required(),
+        id: Joi.pouuid().pouuid(orderedUuidPrefix).required(),
+        author_id: Joi.pouuid().pouuid('AU').required(),
         title: Joi.string().min(1).max(100).required(),
     },
 });
