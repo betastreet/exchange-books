@@ -33,6 +33,7 @@
     "bunyan": "^1.8.4",
     "debug": "^2.2.0",
     "joi": "^10.0.1",
+    "joi-prefixed-ordered-uuid": "^0.0.2",
     "knex": "^0.12.6",
     "mysql": "^2.11.1",
     "node-restify-validation": "^1.0.5",
