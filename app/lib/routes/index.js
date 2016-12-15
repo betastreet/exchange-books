@@ -93,8 +93,14 @@ module.exports = function routes(server) {
 };
 
 function genericResponse(req, res) {
+    let masked = res.data;
+    if (Array.isArray(res.data)) {
+        masked = res.data.map(model => model.mask('dp'));
+    } else if (res.data) {
+        masked = res.data.mask('dp');
+    }
     const response = {
-        data: res.data,
+        data: masked,
         pagination: res.pagination,
     };
     res.send(response);

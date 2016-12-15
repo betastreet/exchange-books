@@ -11,9 +11,10 @@ const knex = require('knex')({
 
 const bookshelf = require('bookshelf')(knex);
 
+bookshelf.plugin(require('bookshelf-mask'));
 bookshelf.plugin(require('bookshelf-prefixed-ordered-uuid'));
 bookshelf.plugin(require('bookshelf-paranoia'));
 bookshelf.plugin('pagination');
-bookshelf.plugin('bookshelf-signals');
+bookshelf.plugin(require('bookshelf-signals'));
 
 module.exports = bookshelf;

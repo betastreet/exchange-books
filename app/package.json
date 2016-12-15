@@ -26,6 +26,7 @@
   "dependencies": {
     "amqplib": "^0.5.1",
     "bookshelf": "^0.10.2",
+    "bookshelf-mask": "^2.0.1",
     "bookshelf-modelbase": "^2.10.2",
     "bookshelf-paranoia": "^0.9.0",
     "bookshelf-prefixed-ordered-uuid": "^1.1.3",
@@ -38,7 +39,8 @@
     "mysql": "^2.11.1",
     "node-restify-validation": "^1.0.5",
     "pm2": "^2.0.19",
-    "restify": "^4.2.0"
+    "restify": "^4.2.0",
+    "restify-basic-acl": "^0.0.1"
   },
   "eslintConfig": {
     "extends": "airbnb-base",

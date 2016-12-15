@@ -1,6 +1,8 @@
 const log = require('log');
 const restify = require('restify');
+const permissions = require('permissions');
 const restifyValidation = require('node-restify-validation');
+const basicAcl = require('restify-basic-acl');
 
 const serverConfig = {
     name: process.env.APP_NAME,
@@ -23,6 +25,11 @@ function createServer() {
         .use(restify.requestLogger())
         .use(restify.queryParser())
         .use(restify.bodyParser())
+        .use(basicAcl.basicAclPlugin({
+            userHeader: 'X-User',
+            rolesHeader: 'X-User-Roles',
+            roles: permissions,
+        }, restify))
         .use(restifyValidation.validationPlugin({
             errorsAsArray: true,
             forbidUndefinedVariables: false,

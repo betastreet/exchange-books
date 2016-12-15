@@ -14,4 +14,8 @@ module.exports = ModelBase.extend({
         author_id: Joi.pouuid().pouuid('AU').required(),
         title: Joi.string().min(1).max(100).required(),
     },
+}, {
+    masks: {
+        user: 'id,author_id',
+    },
 });
