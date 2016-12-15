@@ -14,8 +14,7 @@ module.exports = {
 function getBooks(req, res, next) {
     Book.fetchPage({ page: req.query.page || 1, pageSize: req.query.limit || 10 })
         .then((books) => {
-            res.data = books.models;
-            res.pagination = books.pagination;
+            res.data = books;
             return next();
         }).catch(next);
 }

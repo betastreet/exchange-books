@@ -93,15 +93,9 @@ module.exports = function routes(server) {
 };
 
 function genericResponse(req, res) {
-    let masked = res.data;
-    if (Array.isArray(res.data)) {
-        masked = res.data.map(model => model.mask('dp'));
-    } else if (res.data) {
-        masked = res.data.mask('dp');
-    }
     const response = {
-        data: masked,
-        pagination: res.pagination,
+        data: (res.data && res.data.mask ? res.data.mask(req.roles) : res.data),
+        pagination: (res.data ? res.data.pagination : undefined),
     };
     res.send(response);
 }

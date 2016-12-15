@@ -17,5 +17,6 @@ module.exports = ModelBase.extend({
 }, {
     masks: {
         user: 'id,author_id',
+        admin: 'id,author_id,title',
     },
 });
