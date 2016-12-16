@@ -1,9 +1,24 @@
 const bookshelf = require('database');
-const rabit = require('queue');
-// const Book = require('models/book');
+const rabit = require('rmq-exchange')(require('rabbit-config'));
+const Book = require('models/book');
 
-module.exports = function publishers() {
-    bookshelf.on('saved', 'Book', (model) => {
-        rabit.publishToExchange('book-updates', model.toJSON());
+rabit.channel().then(channel => channel.publishTo('books', 'create', 'test')).catch(console.error);
+
+bookshelf.on('created', Book, (model) => {
+    console.log('================');
+    rabit.channel().then((channel) => {
+        channel.publishTo('Books', 'create', model.toJSON());
     });
-};
+});
+
+bookshelf.on('updated', Book, (model) => {
+    rabit.channel().then((channel) => {
+        channel.publishTo('books', 'update', model.toJSON());
+    });
+});
+
+bookshelf.on('destroyed', Book, (model) => {
+    rabit.channel().then((channel) => {
+        channel.publishTo('books', 'delete', model.toJSON());
+    });
+});

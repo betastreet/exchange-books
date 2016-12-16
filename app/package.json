@@ -40,7 +40,8 @@
     "node-restify-validation": "^1.0.5",
     "pm2": "^2.0.19",
     "restify": "^4.2.0",
-    "restify-basic-acl": "^0.0.1"
+    "restify-basic-acl": "^0.0.1",
+    "rmq-exchange": "^3.1.1"
   },
   "eslintConfig": {
     "extends": "airbnb-base",

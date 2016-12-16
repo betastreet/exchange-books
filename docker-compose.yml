@@ -32,6 +32,9 @@ services:
       MYSQL_USER: "user"
       MYSQL_PASSWORD: "password"
       MYSQL_DATABASE: "database"
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+      RABBITMQ_HOST: "rabbitmq"
     mem_limit: 512m
     volumes:
       - ./app/lib:/opt/books/lib
@@ -45,3 +48,15 @@ services:
         max-file: "2"
     links:
       - database
+
+  rabbitmq:
+    hostname: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    networks:
+      - back-tier
+    image: ringpartner/rabbitmq-federation
+    logging:
+      driver: "json-file"
+    mem_limit: 512m
