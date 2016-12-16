@@ -2,7 +2,7 @@ const $ = (process.env.NODE_ENV === 'production');
 
 module.exports = {
     queues: [{
-        name: 'books',
+        name: 'Books',
         key: ($) ? 'books' : 'testBooks',
         actions: {
             update: {
@@ -35,7 +35,7 @@ module.exports = {
     exchanges: [{
         name: 'Books',
         key: ($) ? 'Books' : 'testBooks',
-        type: 'fanout',
+        type: 'direct',
     }],
 
     policies: [{

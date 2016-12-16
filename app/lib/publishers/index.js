@@ -1,24 +1,24 @@
 const bookshelf = require('database');
-const rabit = require('rmq-exchange')(require('rabbit-config'));
+const rabbit = require('rmq-exchange')(require('rabbit-config'));
 const Book = require('models/book');
 
-rabit.channel().then(channel => channel.publishTo('books', 'create', 'test')).catch(console.error);
-
 bookshelf.on('created', Book, (model) => {
-    console.log('================');
-    rabit.channel().then((channel) => {
-        channel.publishTo('Books', 'create', model.toJSON());
+    rabbit.channel().then((channel) => {
+        channel.publishTo('Books', 'create', model.toJSON())
+            .catch(console.error);
     });
 });
 
 bookshelf.on('updated', Book, (model) => {
-    rabit.channel().then((channel) => {
-        channel.publishTo('books', 'update', model.toJSON());
+    rabbit.channel().then((channel) => {
+        channel.publishTo('Books', 'update', model.toJSON())
+            .catch(console.error);
     });
 });
 
 bookshelf.on('destroyed', Book, (model) => {
-    rabit.channel().then((channel) => {
-        channel.publishTo('books', 'delete', model.toJSON());
+    rabbit.channel().then((channel) => {
+        channel.publishTo('Books', 'destroy', model.toJSON())
+            .catch(console.error);
     });
 });
