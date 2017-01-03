@@ -1,0 +1,11 @@
+{
+  "consul": "{{.CONSUL}}:8500",
+  "services": [
+    {
+      "name": "database",
+      "port": "{{.PORT}}",
+      "poll": 3,
+      "ttl": 10
+    }
+  ]
+}

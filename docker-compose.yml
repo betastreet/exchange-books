@@ -38,8 +38,6 @@ services:
     mem_limit: 512m
     volumes:
       - ./app/lib:/opt/books/lib
-    expose:
-      - 3000
     networks:
       - back-tier
     logging:

@@ -1,0 +1,28 @@
+{
+  "consul": "{{.CONSUL}}:8500",
+  "logging": {
+    "level": "INFO",
+    "format": "default",
+    "output": "stdout"
+  },
+  "services": [
+    {
+      "name": "apix",
+      "port": "{{.PORT}}",
+      "poll": 3,
+      "ttl": 10,
+      "health": "/usr/bin/curl -o /dev/null -s http://localhost:{{.PORT}}"
+    }
+  ],
+  "backends": [
+    {
+      "name": "rabbitmq",
+      "poll": 3,
+      "onChange": "pkill -SIGHUP node"
+    }, {
+      "name": "database",
+      "poll": 3,
+      "onChange": "pkill -SIGHUP node"
+    }
+  ]
+}

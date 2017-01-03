@@ -1,5 +1,5 @@
 const bookshelf = require('database');
-const rabbit = require('rmq-exchange')(require('rabbit-config'));
+const rabbit = require('rmq-exchange');
 const Book = require('models/book');
 
 bookshelf.on('created', Book, (model) => {
