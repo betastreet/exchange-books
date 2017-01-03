@@ -1,13 +1,14 @@
 const Piloted = require('piloted');
+const rabbit = require('rmq-exchange');
 
 Piloted.config(require(process.env.CONTAINERPILOT_PATH), (err) => {
     if (err) console.error(err);
 
-    console.log('piloted');
+    const rmqService = Piloted.service('rabbitmq');
 
     Piloted.on('refresh', () => {
-        console.log(this, ...arguments);
-        console.log('stuff');
+        rabbit.close();
+        rabbit.connect(rmqService.address);
     });
 });
 

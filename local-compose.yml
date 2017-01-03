@@ -66,6 +66,6 @@ rabbitmq:
     - RABBITMQ_DEFAULT_PASS=guest
   links:
     - consul:consul
-  ports:
-    - "15672:15672"
+  # ports:
+    # - "15672:15672"
   restart: always
