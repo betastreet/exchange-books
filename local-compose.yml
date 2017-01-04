@@ -14,7 +14,7 @@ consul:
       -ui-dir /ui
 
 database:
-  build: ./database
+  image: ringpartner/autopilot-percona
   environment:
     - PORT=3306
     - CONSUL_AGENT=1
@@ -57,7 +57,7 @@ api:
     /opt/app/node_modules/.bin/pm2 start /opt/app/lib/index.js --no-daemon --watch
 
 rabbitmq:
-  build: ./rabbitmq
+  image: ringpartner/rabbitmq-federation
   environment:
     - PORT=15672
     - CNOSUL_AGENT=1
