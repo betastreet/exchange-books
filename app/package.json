@@ -41,7 +41,7 @@
     "pm2": "^2.0.19",
     "restify": "^4.2.0",
     "restify-basic-acl": "^0.0.1",
-    "rmq-exchange": "^3.2.0",
+    "rmq-exchange": "^4.0.0",
     "piloted": "^2.0.0"
   },
   "eslintConfig": {

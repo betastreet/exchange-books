@@ -25,6 +25,7 @@ COPY containerpilot.json ${CONTAINERPILOT_PATH}
 ENV CONTAINERPILOT=file://${CONTAINERPILOT_PATH}
 
 COPY lib/ /opt/app/lib/
+COPY knexfile.js /opt/app/knexfile.js
 
 EXPOSE 3000
 # ENTRYPOINT ["/bin/containerpilot", "npm"]

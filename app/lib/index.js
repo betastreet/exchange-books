@@ -8,7 +8,9 @@ Piloted.config(require(process.env.CONTAINERPILOT_PATH), (err) => {
 
     Piloted.on('refresh', () => {
         rabbit.close();
-        rabbit.connect(rmqService.address);
+        rabbit.connect(rmqService.address)
+            .then(() => rabbit.create())
+            .catch(err => { throw err; });
     });
 });
 
@@ -19,4 +21,3 @@ require('publishers');
 
 module.exports = server;
 
-console.log('stuff x');
