@@ -4,7 +4,7 @@
   "description": "",
   "main": "lib/index.js",
   "scripts": {
-    "start": "npm run watch:server | node_modules/.bin/bunyan -j -o short",
+    "start": "npm run watch:server | bunyan -j -o short",
     "migrate": "knex migrate:latest",
     "seed": "knex seed:run",
     "watch:server": "DEBUG=*,-nodemon:watch nodemon lib/index.js --ignore node_modules",
