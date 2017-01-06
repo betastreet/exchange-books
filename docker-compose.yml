@@ -6,19 +6,6 @@ networks:
 
 services:
 
-  consul:
-    image: autopilotpattern/consul
-    restart: always
-    dns:
-      - 127.0.0.1
-    command: >
-      /usr/local/bin/containerpilot
-      /bin/consul agent -server
-      -config-dir=/etc/consul
-      -log-level=err
-      -bootstrap-expect 1
-      -ui-dir /ui
-
   database:
     image: ringpartner/autopilot-percona
     environment:
@@ -41,7 +28,6 @@ services:
   api:
     env_file: .env
     build: ./app
-    command: npm run start
     environment:
       - NODE_PATH=/opt/app/lib
       - CONSUL_AGENT=1
@@ -58,18 +44,16 @@ services:
       - RABBITMQ_HOST=rabbitmq
     mem_limit: 512m
     volumes:
-      - ./app/lib:/opt/books/lib
+      - ./app/lib:/opt/app/lib
     networks:
       - back-tier
     logging:
       options:
         max-size: "1m"
         max-file: "2"
-    restart: always
     command: >
-      /bin/containerpilot 
+      /bin/containerpilot
       /opt/app/node_modules/.bin/pm2 start /opt/app/lib/index.js --no-daemon --watch
-
 
   rabbitmq:
     image: ringpartner/rabbitmq-federation

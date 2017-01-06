@@ -8,7 +8,7 @@
     "migrate": "knex migrate:latest",
     "seed": "knex seed:run",
     "watch:server": "DEBUG=*,-nodemon:watch nodemon lib/index.js --ignore node_modules",
-    "test": "NODE_ENV=test jest",
+    "test": "NODE_ENV=test jest --forceExit",
     "production": "pm2 index.js"
   },
   "keywords": [],

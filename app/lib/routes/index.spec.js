@@ -13,6 +13,7 @@ describe('API Endpoints', () =>{
 
         it('should return a paginated list of books', (done) => {
             return request.get('/')
+                .set('X-User-Roles', 'admin')
                 .end((req, res) => {
                     expect(res.body.data).toBeInstanceOf(Array);
                     expect(res.body.pagination.page).toBe(1);
@@ -28,6 +29,7 @@ describe('API Endpoints', () =>{
     describe('[GET] /:id', () => {
         it('should return a specific book entry based on id', (done) => {
             return request.get(`/${bookId}`)
+                .set('X-User-Roles', 'admin')
                 .end((req, res) => {
                     expect(res.body.data.id).toBe(bookId);
                     expect(res.body.data.author_id).toMatch(bookshelf.Model.prefixedUuidRegex('AU'));
@@ -40,6 +42,7 @@ describe('API Endpoints', () =>{
     describe('[GET] /author/:author_id', () => {
         it('should return all books for a specific author', (done) => {
             return request.get(`/author/${authorId}`)
+                .set('X-User-Roles', 'admin')
                 .end((req, res) => {
                     expect(res.body.data).toBeInstanceOf(Array);
                     expect(res.body.data[0].author_id).toBe(authorId);
@@ -56,8 +59,8 @@ describe('API Endpoints', () =>{
                 author_id: authorId,
                 title: 'The Big Comfy Couch',
             };
-            return request
-                .post('/')
+            return request.post('/')
+                .set('X-User-Roles', 'admin')
                 .send(payload)
                 .end((req, res) => {
                     const data = res.body.data;
@@ -73,8 +76,8 @@ describe('API Endpoints', () =>{
     // this should be before the test for /import. The import will recreate the row deleted here.
     describe('[DELETE] /:id', () => {
         it ('should delete an existing book and return', (done) => {
-            return request
-                .delete(`/${bookId}`)
+            return request.delete(`/${bookId}`)
+                .set('X-User-Roles', 'admin')
                 .end((req, res) => {
                     expect(res.body.data).toBeInstanceOf(Object);
                     done();
@@ -93,8 +96,8 @@ describe('API Endpoints', () =>{
                 author_id: authorId,
                 title: 'The Big Comfy Couch 3',
             }];
-            return request
-                .post('/import')
+            return request.post('/import')
+                .set('X-User-Roles', 'admin')
                 .send(payload)
                 .end((req, res) => {
                     const data = res.body.data;
@@ -112,8 +115,8 @@ describe('API Endpoints', () =>{
                 author_id: authorId,
                 title: 'The Big Comfy Couch: Return of the Couch',
             };
-            return request
-                .put(`/${bookId}`)
+            return request.put(`/${bookId}`)
+                .set('X-User-Roles', 'admin')
                 .send(payload)
                 .end((req, res) => {
                     const data = res.body.data;
