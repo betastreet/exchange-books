@@ -12,13 +12,8 @@ env:
   DOCKER_COMPOSE_VERSION: 1.8.1
 
 before_install:
-
   - docker-compose up -d
-
-  # for logging
   - docker ps
-
-  # give time for the database to spin up before migration
   - sleep 15
 
 before_script:
@@ -27,3 +22,8 @@ before_script:
 
 script:
   - docker-compose run api npm run test
+
+notifications:
+  email: never
+  slack:
+    secure: pLTdSlXpKnbulS5gecW5zhM6+Hybhy7a6cZTP1bX9tGaeprt3DMHLvjRDTsMscQ7g/ReKu/lgu9EmYnjagK+DKRma1LP6on+7bvpFNcXzrXiTR7iKfs9bXFPfvnLe2keoZvbtJm/U5KuFj2jI1C7qRbUu5Y7gV44SHQ/Ly5nUlD534TTcVn65ruMHvIsPojN6vwjL7/CLEPFzXrQi3aPItCVVBvL99nbW0AC9mSEfkr/OTQFgiDD6+/jiODThY/ia1JwQ8J0cFIsi/hNUv5Hjy54LqWVlBXjkJjdrHKHyO1rAK81nxJmrWxePvxwvAVXibz7Xm+u2QLNQ+iSVTUJ1tQMnWE+hLEw3Cj2VlVNMMWSmoIN1kNA8kT1z6kVqOwVnJqkSuma1CjSZ/2Xpci8cFyvVmeOxLKCwLBLSBKFoC+YaGRV8yAYYrzNn7jB/kXfXBCD1tw0Hk5Px4O7xuOP5Vu61w3n9CcFcKKHw9FfnKCgkbzBG2O+hlf6J9SJtyAqg3o2/h26aCG0Kgl1l1EEjxNaFVuFzhIcDl4tf0W7NONjit6kEu2S14KYWRcZWUT/FfuawfSj453m34KF+4uKxX8GEsrr8drrtsMHP5oTHG/NdNcmufrseraUX7QU0xPka/9Peq4s6QZm4zlBY1UN8WUJ1J/LsOHwaCbcdtdRyGg=
