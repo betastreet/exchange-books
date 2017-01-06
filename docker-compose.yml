@@ -6,57 +6,82 @@ networks:
 
 services:
 
+  consul:
+    image: autopilotpattern/consul
+    restart: always
+    dns:
+      - 127.0.0.1
+    command: >
+      /usr/local/bin/containerpilot
+      /bin/consul agent -server
+      -config-dir=/etc/consul
+      -log-level=err
+      -bootstrap-expect 1
+      -ui-dir /ui
+
   database:
-    hostname: database
+    image: ringpartner/autopilot-percona
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_USER: "user"
-      MYSQL_PASSWORD: "password"
-      MYSQL_DATABASE: "database"
+      - PORT=3306
+      - CONSUL_AGENT=1
+      - CONSUL=consul
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=database
     networks:
       - back-tier
     expose:
       - 3306
-    image: percona
     logging:
       driver: "json-file"
     mem_limit: 512m
+    restart: always
 
   api:
     env_file: .env
     build: ./app
     command: npm run start
     environment:
-      PORT: 3000
-      MYSQL_HOST: "database"
-      MYSQL_USER: "user"
-      MYSQL_PASSWORD: "password"
-      MYSQL_DATABASE: "database"
-      RABBITMQ_DEFAULT_USER: "guest"
-      RABBITMQ_DEFAULT_PASS: "guest"
-      RABBITMQ_HOST: "rabbitmq"
+      - NODE_PATH=/opt/app/lib
+      - CONSUL_AGENT=1
+      - CONSUL=consul
+      - PORT=3000
+      - APP_NAME=books-service
+      - APP_VERISON=1.0.0
+      - MYSQL_HOST=database
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=database
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+      - RABBITMQ_HOST=rabbitmq
     mem_limit: 512m
     volumes:
       - ./app/lib:/opt/books/lib
-    expose:
-      - 3000
     networks:
       - back-tier
     logging:
       options:
         max-size: "1m"
         max-file: "2"
-    links:
-      - database
+    restart: always
+    command: >
+      /bin/containerpilot 
+      /opt/app/node_modules/.bin/pm2 start /opt/app/lib/index.js --no-daemon --watch
+
 
   rabbitmq:
-    hostname: rabbitmq
-    environment:
-      RABBITMQ_DEFAULT_USER: "guest"
-      RABBITMQ_DEFAULT_PASS: "guest"
+    image: ringpartner/rabbitmq-federation
     networks:
       - back-tier
-    image: ringpartner/rabbitmq-federation
     logging:
       driver: "json-file"
     mem_limit: 512m
+    environment:
+      - PORT=15672
+      - CNOSUL_AGENT=1
+      - CONSUL=consul
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    restart: always

@@ -1,0 +1,88 @@
+consul:
+  image: autopilotpattern/consul
+  restart: always
+  dns:
+    - 127.0.0.1
+  ports:
+    - "8500:8500"
+  labels:
+    - triton.cns.services=exchange-books-consul
+  command: >
+    /usr/local/bin/containerpilot
+    /bin/consul agent -server
+      -config-dir=/etc/consul
+      -log-level=err
+      -bootstrap-expect 1
+      -ui-dir /ui
+  expose:
+    - 53
+    - 8300
+    - 8301
+    - 8302
+    - 8400
+    - 8500
+
+database:
+  image: ringpartner/autopilot-percona
+  mem_limit: 4g
+  environment:
+    - PORT=3306
+    - CONSUL_AGENT=1
+    - CONSUL=consul
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_USER=user
+    - MYSQL_PASSWORD=password
+    - MYSQL_DATABASE=database
+    - CONTAINERPILOT=file:///etc/containerpilot.json
+    - LOG_LEVEL=INFO
+  links:
+    - consul:consul
+  restart: always
+
+api:
+  image: ringpartner/exchange-books
+  environment:
+    - NODE_PATH=/opt/app/lib
+    - CONSUL_AGENT=1
+    - CONSUL=consul
+    - PORT=3000
+    - APP_NAME=books-service
+    - APP_VERISON=1.0.0
+    - MYSQL_HOST=database
+    - MYSQL_USER=user
+    - MYSQL_PASSWORD=password
+    - MYSQL_DATABASE=database
+    - RABBITMQ_DEFAULT_USER=guest
+    - RABBITMQ_DEFAULT_PASS=guest
+    - RABBITMQ_HOST=rabbitmq
+  expose:
+    - 3000
+  ports:
+    - 3000
+  links:
+    - rabbitmq:rabbitmq
+    - database:database
+    - consul:consul
+  restart: always
+  labels:
+    - triton.cns.services=exchange-books-api
+  command: >
+    /bin/containerpilot 
+    /opt/app/node_modules/.bin/pm2 start /opt/app/lib/index.js --no-daemon --watch
+
+rabbitmq:
+  image: ringpartner/rabbitmq-federation
+  environment:
+    - PORT=15672
+    - CNOSUL_AGENT=1
+    - CONSUL=exchange-books-consul.svc.567b82d0-42e8-6a3a-ddf0-b80db5296d30.us-east-3.triton.zone
+    - RABBITMQ_DEFAULT_USER=guest
+    - RABBITMQ_DEFAULT_PASS=guest
+  links:
+    - consul:consul
+  ports:
+    - 15672
+    - 5672
+  labels:
+    - triton.cns.services=exchange-books-rabbit
+  restart: always
