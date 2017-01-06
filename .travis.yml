@@ -11,6 +11,10 @@ env:
   DOCKER_COMPOSE_VERSION: 1.8.1
 
 before_install:
+
+  - docker-compose --version
+  - docker -v
+
   # update is required to update the repositories to see the new packages for
   # Docker.
   - sudo apt-get update
