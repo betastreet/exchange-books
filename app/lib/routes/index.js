@@ -2,6 +2,18 @@ const books = require('middleware/books');
 
 module.exports = function routes(server) {
     /**
+     * @api {get} / Check API health
+     * @apiName GetHealth
+     * @apiGroup Health
+     *
+     * @apiSuccess {Object} response Response data
+     */
+    server.get('/health',
+        (req, res) => {
+            res.send({ status: "OK" });
+        });
+
+    /**
      * @api {get} / List books
      * @apiName GetBooks
      * @apiGroup Books
