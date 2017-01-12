@@ -8,7 +8,6 @@ if (process.env.NODE_ENV === 'production') {
         const rmqService = Piloted.service('rabbitmq');
 
         Piloted.on('refresh', () => {
-            rabbit.close();
             rabbit.connect(rmqService.address)
                 .then(() => rabbit.create())
                 .catch(err => { throw err; });
