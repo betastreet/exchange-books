@@ -7,7 +7,7 @@
   },
   "services": [
     {
-      "name": "apix",
+      "name": "books_api",
       "port": "{{.PORT}}",
       "poll": 3,
       "ttl": 10,
