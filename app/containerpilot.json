@@ -7,11 +7,11 @@
   },
   "services": [
     {
-      "name": "apix",
+      "name": "api",
       "port": "{{.PORT}}",
       "poll": 3,
       "ttl": 10,
-      "health": "/usr/bin/curl -o /dev/null -s http://localhost:{{.PORT}}"
+      "health": "/usr/bin/curl --fail -H 'X-User-Roles: admin' -s http://localhost:{{.PORT}}/health"
     }
   ],
   "backends": [
@@ -19,7 +19,8 @@
       "name": "rabbitmq",
       "poll": 3,
       "onChange": "pkill -SIGHUP node"
-    }, {
+    },
+    {
       "name": "database",
       "poll": 3,
       "onChange": "pkill -SIGHUP node"
