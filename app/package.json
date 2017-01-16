@@ -8,7 +8,7 @@
     "migrate": "knex migrate:latest",
     "seed": "knex seed:run",
     "watch:server": "DEBUG=*,-nodemon:watch nodemon lib/index.js --ignore node_modules",
-    "test": "NODE_ENV=test jest --forceExit",
+    "test": "PORT=3001 NODE_ENV=test jest --forceExit",
     "production": "pm2 index.js"
   },
   "keywords": [],
@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "bookshelf": "^0.10.2",
-    "bookshelf-consul-pilot": "^0.0.1",
+    "bookshelf-consul-pilot": "^0.1.0",
     "bookshelf-modelbase": "^2.10.2",
     "bookshelf-multi-mask": "^0.0.3",
     "bookshelf-paranoia": "^0.9.0",

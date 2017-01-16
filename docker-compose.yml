@@ -68,6 +68,8 @@ services:
       - back-tier
     links:
       - consul:consul
+      - database:database
+      - rabbitmq:rabbitmq
     logging:
       options:
         max-size: "1m"

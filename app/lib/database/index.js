@@ -9,4 +9,4 @@ module.exports = new BookshelfConsulPilot(knexfile, process.env.MYSQL_HOST, path
     bookshelf.plugin('pagination');
     bookshelf.plugin(require('bookshelf-signals')());
     bookshelf.plugin(require('bookshelf-modelbase').pluggable);
-});
+}, process.env.NODE_ENV === 'test');

@@ -1,7 +1,6 @@
 const server = require('../index.js');
 const request = require('supertest')(server);
-const bookshelf = require('database');
-const Book = require('models/book');
+const bookshelf = require('database').bookshelf;
 
 const bookId = 'BO455d7811ee785884b43f693fda7a17e2';
 const authorId = 'AU42c611595f9da62c99f7e061f8df1ff2';
@@ -53,6 +52,26 @@ describe('API Endpoints', () =>{
         });
     });
 
+    describe('[PUT] /:id', () => {
+        it ('should update an existing book and return them', (done) => {
+            const payload = {
+                author_id: authorId,
+                title: 'The Big Comfy Couch: Return of the Couch',
+            };
+            return request.put(`/${bookId}`)
+                .set('X-User-Roles', 'admin')
+                .send(payload)
+                .end((req, res) => {
+                    const data = res.body.data;
+
+                    expect(data.id).toMatch(bookshelf.Model.prefixedUuidRegex('BO'));
+                    expect(data.author_id).toBe(authorId);
+                    expect(data.title).toBeDefined();
+                    done();
+                });
+        });
+    });
+
     describe('[POST] /', () => {
         it('should create a new book object and return it', (done) => {
             const payload = {
@@ -88,10 +107,8 @@ describe('API Endpoints', () =>{
     describe('[POST] /import', () => {
         it ('should create bulk books and return them', (done) => {
             const payload = [{
-                id: bookId,
                 author_id: authorId,
                 title: 'The Big Comfy Couch 2',
-                deleted_at: null,
             }, {
                 author_id: authorId,
                 title: 'The Big Comfy Couch 3',
@@ -101,6 +118,7 @@ describe('API Endpoints', () =>{
                 .send(payload)
                 .end((req, res) => {
                     const data = res.body.data;
+
                     expect(data[0].id).toMatch(bookshelf.Model.prefixedUuidRegex('BO'));
                     expect(data[0].author_id).toBe(authorId);
                     expect(data[0].title).toBeDefined();
@@ -109,23 +127,4 @@ describe('API Endpoints', () =>{
         });
     });
 
-    describe('[PUT] /:id', () => {
-        it ('should update an existing book and return them', (done) => {
-            const payload = {
-                author_id: authorId,
-                title: 'The Big Comfy Couch: Return of the Couch',
-            };
-            return request.put(`/${bookId}`)
-                .set('X-User-Roles', 'admin')
-                .send(payload)
-                .end((req, res) => {
-                    const data = res.body.data;
-
-                    expect(data.id).toMatch(bookshelf.Model.prefixedUuidRegex('BO'));
-                    expect(data.author_id).toBe(authorId);
-                    expect(data.title).toBeDefined();
-                    done();
-                });
-        });
-    });
 });
