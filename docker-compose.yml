@@ -64,7 +64,7 @@ services:
     mem_limit: 512m
     environment:
       - PORT=15672
-      - CNOSUL_AGENT=1
+      - CONSUL_AGENT=1
       - CONSUL=consul
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
