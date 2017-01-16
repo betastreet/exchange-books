@@ -21,3 +21,11 @@ $ docker exec books_api_1 npm run seed
 ## Endpoints
 
 See [endpoints.curl](endpoints.curl).
+
+## Deployment
+
+Deploy on Joyent Triton by running the following:
+
+```bash
+source ./triton_env.sh "256m" "exchange-consul" "my_mysql_password" "my_rabbitmq_password" && docker-compose -f triton-compose.yml up -d
+```

@@ -6,6 +6,23 @@ networks:
 
 services:
 
+  consul:
+    image: autopilotpattern/consul
+    restart: always
+    dns:
+      - 127.0.0.1
+    ports:
+      - "8500:8500"
+    networks:
+      - back-tier
+    command: >
+      /usr/local/bin/containerpilot
+      /bin/consul agent -server
+        -config-dir=/etc/consul
+        -log-level=err
+        -bootstrap-expect 1
+        -ui-dir /ui
+
   database:
     image: ringpartner/autopilot-percona
     environment:
@@ -20,6 +37,8 @@ services:
       - back-tier
     expose:
       - 3306
+    links:
+      - consul:consul
     logging:
       driver: "json-file"
     mem_limit: 512m
@@ -47,6 +66,8 @@ services:
       - ./app/lib:/opt/app/lib
     networks:
       - back-tier
+    links:
+      - consul:consul
     logging:
       options:
         max-size: "1m"
@@ -59,6 +80,8 @@ services:
     image: ringpartner/rabbitmq-federation
     networks:
       - back-tier
+    links:
+      - consul:consul
     logging:
       driver: "json-file"
     mem_limit: 512m

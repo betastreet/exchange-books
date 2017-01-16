@@ -1,4 +1,4 @@
-const Book = require('models/book');
+const db = require('database');
 
 // Contents ===================
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
 };
 
 function getBooks(req, res, next) {
-    Book.fetchPage({ page: req.query.page || 1, pageSize: req.query.limit || 10 })
+    db.model('book').fetchPage({ page: req.query.page || 1, pageSize: req.query.limit || 10 })
         .then((books) => {
             res.data = books;
             return next();
@@ -20,7 +20,7 @@ function getBooks(req, res, next) {
 }
 
 function getBook(req, res, next) {
-    Book.findById(req.params.id)
+    db.model('book').findById(req.params.id)
         .then((book) => {
             res.data = book;
             return next();
@@ -28,7 +28,7 @@ function getBook(req, res, next) {
 }
 
 function getBooksByAuthor(req, res, next) {
-    Book.findAll({ author_id: req.params.author_id })
+    db.model('book').findAll({ author_id: req.params.author_id })
         .then((book) => {
             res.data = book;
             return next();
@@ -37,7 +37,7 @@ function getBooksByAuthor(req, res, next) {
 
 function updateBook(req, res, next) {
     const params = req.body;
-    Book.update(params, { id: req.params.id || params.id })
+    db.model('book').update(params, { id: req.params.id || params.id })
         .then((book) => {
             res.data = book;
             return next();
@@ -45,7 +45,7 @@ function updateBook(req, res, next) {
 }
 
 function createBook(req, res, next) {
-    Book.create(req.body)
+    db.model('book').create(req.body)
         .then((book) => {
             res.data = book;
             return next();
@@ -55,7 +55,7 @@ function createBook(req, res, next) {
 function importBooks(req, res, next) {
     const p = [];
     req.body.forEach((book) => {
-        p.push(Book.upsert({
+        p.push(db.model('book').upsert({
             author_id: book.author_id,
             title: book.title,
         }, book));
@@ -67,7 +67,7 @@ function importBooks(req, res, next) {
 }
 
 function deleteBook(req, res, next) {
-    Book.destroy({ id: req.params.id })
+    db.model('book').destroy({ id: req.params.id })
         .then((book) => {
             res.data = book;
             return next();
