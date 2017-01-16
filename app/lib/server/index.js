@@ -29,6 +29,9 @@ function createServer() {
             userHeader: 'X-User',
             rolesHeader: 'X-User-Roles',
             roles: permissions,
+            unprotectedRoutes: [
+                '/health',
+            ],
         }, restify))
         .use(restifyValidation.validationPlugin({
             errorsAsArray: true,

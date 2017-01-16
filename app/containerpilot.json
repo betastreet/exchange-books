@@ -7,11 +7,11 @@
   },
   "services": [
     {
-      "name": "apix",
+      "name": "books_api",
       "port": "{{.PORT}}",
       "poll": 3,
       "ttl": 10,
-      "health": "/usr/bin/curl -o /dev/null -s http://localhost:{{.PORT}}"
+      "health": "/usr/bin/curl --fail -o /dev/null -s http://localhost:{{.PORT}}/health"
     }
   ],
   "backends": [
