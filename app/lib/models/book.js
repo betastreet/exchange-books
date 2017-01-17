@@ -1,10 +1,9 @@
-const bookshelf = require('database');
-const ModelBase = require('bookshelf-modelbase')(bookshelf);
 const Joi = require('validation');
+const bookshelf = require('database').bookshelf;
 
 const orderedUuidPrefix = 'BO';
 
-module.exports = ModelBase.extend({
+module.exports = bookshelf.Model.extend({
     tableName: 'books',
     orderedUuids: ['id', 'author_id'],
     orderedUuidPrefix,

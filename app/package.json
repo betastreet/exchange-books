@@ -8,7 +8,7 @@
     "migrate": "knex migrate:latest",
     "seed": "knex seed:run",
     "watch:server": "DEBUG=*,-nodemon:watch nodemon lib/index.js --ignore node_modules",
-    "test": "NODE_ENV=test jest --forceExit",
+    "test": "PORT=3001 NODE_ENV=test jest --forceExit",
     "production": "pm2 index.js"
   },
   "keywords": [],
@@ -24,7 +24,6 @@
     "supertest": "^2.0.1"
   },
   "dependencies": {
-    "amqplib": "^0.5.1",
     "bookshelf": "^0.10.2",
     "bookshelf-modelbase": "^2.10.2",
     "bookshelf-multi-mask": "^0.0.3",
@@ -32,7 +31,9 @@
     "bookshelf-prefixed-ordered-uuid": "^1.1.3",
     "bookshelf-signals": "^0.1.1",
     "bunyan": "^1.8.4",
+    "consul-pilot": "^1.0.1",
     "debug": "^2.2.0",
+    "dotenv": "^4.0.0",
     "joi": "^10.0.1",
     "joi-prefixed-ordered-uuid": "^0.0.2",
     "knex": "^0.12.6",
@@ -41,8 +42,7 @@
     "pm2": "^2.0.19",
     "restify": "^4.2.0",
     "restify-basic-acl": "^0.1.0",
-    "rmq-exchange": "^5.0.0",
-    "piloted": "^2.0.0"
+    "rmq-exchange": "^5.0.1"
   },
   "eslintConfig": {
     "extends": "airbnb-base",

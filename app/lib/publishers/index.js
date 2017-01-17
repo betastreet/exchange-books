@@ -1,6 +1,6 @@
-const bookshelf = require('database');
-const rabbit = require('rmq-exchange');
 const Book = require('models/book');
+const bookshelf = require('database').bookshelf;
+const rabbit = require('rmq-exchange');
 
 bookshelf.on('created', Book, (model) => {
     rabbit.publishTo('Books', 'create', model.toJSON())

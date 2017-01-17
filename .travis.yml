@@ -1,18 +1,16 @@
 sudo: required
 
-language: node_js
-
 services:
   - docker
 
-node_js:
-  - node
-
 env:
-  DOCKER_COMPOSE_VERSION: 1.8.1
+  global:
+    - COMMIT=${TRAVIS_COMMIT::8}
+    - REPO=ringpartner/exchange-books
+    - DOCKER_COMPOSE_VERSION=1.8.1
 
 before_install:
-  - docker-compose up -d rabbitmq
+  - docker-compose up -d rabbitmq database consul
   - docker ps
   - sleep 15
   - docker-compose up -d
@@ -25,6 +23,12 @@ before_script:
 
 script:
   - docker-compose run api npm run test
+
+deploy:
+  provider: script
+  script: deploy.sh
+  on:
+    branch: master
 
 notifications:
   email: never
