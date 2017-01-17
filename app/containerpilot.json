@@ -28,11 +28,11 @@
   ],
   "backends": [
     {
-      "name": "rabbitmq",
+      "name": "{{.RABBITMQ_SERVICE}}",
       "poll": 3,
       "onChange": "pkill -SIGHUP node"
     }, {
-      "name": "database",
+      "name": "{{.MYSQL_SERVICE}}",
       "poll": 3,
       "onChange": "pkill -SIGHUP node"
     }
