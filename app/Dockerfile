@@ -4,11 +4,14 @@ RUN apk update && \
     apk add curl && \
     rm -rf /var/cache/apk/*
 
-# install node modules
-COPY package.json /opt/app/
-WORKDIR /opt/app
-RUN npm install
-
+# Install consul
+RUN export CONSUL_VERSION=0.7.2 \
+    && export CONSUL_CHECKSUM=aa97f4e5a552d986b2a36d48fdc3a4a909463e7de5f726f3c5a89b8a1be74a58 \
+    && curl --retry 7 --fail -vo /tmp/consul.zip "https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip" \
+    && echo "${CONSUL_CHECKSUM}  /tmp/consul.zip" | sha256sum -c \
+    && unzip /tmp/consul -d /usr/local/bin \
+    && rm /tmp/consul.zip \
+    && mkdir /config
 
 # Install ContainerPilot
 ENV CONTAINERPILOT_VERSION 2.6.0
@@ -24,12 +27,12 @@ ENV CONTAINERPILOT_PATH=/etc/containerpilot.json
 COPY containerpilot.json ${CONTAINERPILOT_PATH}
 ENV CONTAINERPILOT=file://${CONTAINERPILOT_PATH}
 
+# install node modules
+COPY package.json /opt/app/
+WORKDIR /opt/app
+RUN npm install
+
 COPY lib/ /opt/app/lib/
 COPY knexfile.js /opt/app/knexfile.js
 
 EXPOSE 3000
-# ENTRYPOINT ["/bin/containerpilot", "npm"]
-# CMD ["--prefix=/opt/app/", "run", "start"]
-# ENTRYPOINT ["/bin/containerpilot", "node"]
-# CMD ["/opt/app"]
-
