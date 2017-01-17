@@ -2,7 +2,7 @@ const ConsulPilot = require('consul-pilot');
 const rabbit = require('rmq-exchange');
 
 if (process.env.NODE_ENV !== 'test') {
-    ConsulPilot.watch(process.env.RABBITMQ_HOST, (err, service) => {
+    ConsulPilot.watch(process.env.RABBITMQ_SERVICE, (err, service) => {
         if (err) console.error(err);
 
         console.log('New RabbitMQ connection reported', service);

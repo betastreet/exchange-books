@@ -54,6 +54,7 @@ services:
       - PORT=3000
       - APP_NAME=books-service
       - APP_VERISON=1.0.0
+      - MYSQL_SERVICE=database
       - MYSQL_HOST=database
       - MYSQL_USER=user
       - MYSQL_PASSWORD=password
@@ -61,6 +62,7 @@ services:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
       - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_SERVICE=rabbitmq
     mem_limit: 512m
     volumes:
       - ./app/lib:/opt/app/lib

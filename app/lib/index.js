@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 require('queue');
 require('database');
 const server = require('server')();
