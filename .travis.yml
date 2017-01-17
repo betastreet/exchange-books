@@ -10,9 +10,7 @@ env:
     - DOCKER_COMPOSE_VERSION=1.8.1
 
 before_install:
-  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
   - docker-compose up -d rabbitmq database consul
-  - docker build -t $REPO ./app/
   - docker ps
   - sleep 15
   - docker-compose up -d
@@ -26,9 +24,11 @@ before_script:
 script:
   - docker-compose run api npm run test
 
-after_success:
-  - docker tag $REPO $REPO:$TRAVIS_BUILD_NUMBER
-  - docker push $REPO;
+deploy:
+  provider: script
+  script: deploy.sh
+  on:
+    branch: master
 
 notifications:
   email: never
