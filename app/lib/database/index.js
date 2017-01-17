@@ -1,14 +1,17 @@
 const ConsulPilot = require('consul-pilot');
 const fs = require('fs');
+const dotenv = require('dotenv');
 
 if (process.env.NODE_ENV !== 'test') {
     ConsulPilot.watch(process.env.MYSQL_SERVICE, (err, service) => {
         if (err) console.error(err);
 
-        console.log('New database connection reported', service);
+        const env = dotenv.parse(fs.readFileSync(`${process.env.NODE_PATH}/../.env`));
 
-        if (service.address && service.address !== process.env.MYSQL_HOST) {
-            fs.appendFile(path.join(process.env.NODE_PATH, '/../../.env'), `MYSQL_HOST=${service.address}`, (err) => {
+        console.log('New database connection reported', service, env.MYSQL_HOST);
+
+        if (service.address && service.address !== env.MYSQL_HOST) {
+            fs.appendFile(`${process.env.NODE_PATH}/../.env`, `\nMYSQL_HOST=${service.address}`, (err) => {
                 process.exit(1);
             });
         }

@@ -34,5 +34,6 @@ RUN npm install
 
 COPY lib/ /opt/app/lib/
 COPY knexfile.js /opt/app/knexfile.js
+RUN touch /opt/app/.env
 
 EXPOSE 3000

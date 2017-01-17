@@ -45,7 +45,6 @@ services:
     restart: always
 
   api:
-    env_file: .env
     build: ./app
     environment:
       - NODE_PATH=/opt/app/lib
