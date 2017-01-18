@@ -50,6 +50,7 @@ services:
       - NODE_PATH=/opt/app/lib
       - CONSUL_AGENT=1
       - CONSUL=consul
+      - CONSUL_HOST=localhost
       - PORT=3000
       - APP_NAME=books-service
       - APP_VERISON=1.0.0
