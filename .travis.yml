@@ -1,7 +1,12 @@
 sudo: required
 
+language: node_js
+
 services:
   - docker
+
+node_js:
+  - node
 
 env:
   global:
@@ -23,6 +28,9 @@ before_script:
 
 script:
   - docker exec -it app_api_1 npm run test
+
+# before_deploy:
+#   - npm install -g triton
 
 deploy:
   provider: script
