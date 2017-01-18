@@ -5,6 +5,7 @@ api:
     - NODE_PATH=/opt/app/lib
     - CONSUL_AGENT=1
     - CONSUL=${CONSUL_CNS}.svc.${TRITON_ACCOUNT}.${TRITON_DC}.cns.joyent.com
+    - CONSUL_HOST=localhost
     - PORT=80
     - APP_NAME=books-service
     - APP_VERISON=1.0.0
