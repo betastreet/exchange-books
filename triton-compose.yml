@@ -1,11 +1,11 @@
 api:
   image: ringpartner/exchange-books
-  mem_limit: ${APP_MEMORY}
+  mem_limit: "256m"
   environment:
     - NODE_PATH=/opt/app/lib
     - CONSUL_AGENT=1
-    - CONSUL=${CONSUL_CNS}.svc.${TRITON_ACCOUNT}.${TRITON_DC}.cns.joyent.com
-    - CONSUL_HOST=localhost
+    - CONSUL=exchange-consul.svc.${TRITON_ACCOUNT}.${TRITON_DC}.cns.joyent.com
+    - CONSUL_HOST=exchange-consul.svc.${TRITON_ACCOUNT}.${TRITON_DC}.cns.joyent.com
     - PORT=80
     - APP_NAME=books-service
     - APP_VERISON=1.0.0
