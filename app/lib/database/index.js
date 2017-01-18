@@ -1,16 +1,14 @@
 const ConsulPilot = require('consul-pilot');
 const fs = require('fs');
-const dotenv = require('dotenv');
+const knexfile = require('../../knexfile').development;
 
 if (process.env.NODE_ENV !== 'test') {
     ConsulPilot.watch(process.env.MYSQL_SERVICE, (err, service) => {
         if (err) console.error(err);
 
-        const env = dotenv.parse(fs.readFileSync(`${process.env.NODE_PATH}/../.env`));
+        console.log('New database connection reported', service, knexfile.connection.host);
 
-        console.log('New database connection reported', service, env.MYSQL_HOST);
-
-        if (service.address && service.address !== env.MYSQL_HOST) {
+        if (service.address && service.address !== knexfile.connection.host) {
             fs.appendFile(`${process.env.NODE_PATH}/../.env`, `\nMYSQL_HOST=${service.address}`, (err) => {
                 process.exit(1);
             });
@@ -18,7 +16,6 @@ if (process.env.NODE_ENV !== 'test') {
     }).catch(console.error);
 }
 
-const knexfile = require('../../knexfile').development;
 const knex = require('knex')(knexfile);
 const bookshelf = require('bookshelf')(knex);
 
