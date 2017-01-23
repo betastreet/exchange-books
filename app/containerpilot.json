@@ -1,5 +1,5 @@
 {
-  "consul": "localhost:8500",
+  "consul": "{{ if .CONSUL_AGENT }}localhost{{ else }}{{ if .CONSUL }}{{ .CONSUL }}{{ else }}consul{{ end }}{{ end }}:8500",
   "logging": {
     "level": "INFO",
     "format": "default",
@@ -14,18 +14,18 @@
       "health": "/usr/bin/curl --fail -o /dev/null -s http://localhost:{{.PORT}}/health"
     }
   ],
-  "coprocesses": [
+  "coprocesses": [{{ if .CONSUL_AGENT }}
     {
       "command": ["/usr/local/bin/consul", "agent",
                   "-data-dir=/data",
                   "-config-dir=/config",
                   "-rejoin",
-                  "-retry-join", "{{.CONSUL}}",
+                  "-retry-join", "{{ if .CONSUL }}{{ .CONSUL }}{{ else }}consul{{ end }}",
                   "-retry-max", "10",
                   "-retry-interval", "10s"],
       "restarts": "unlimited"
     }
-  ],
+  {{ end }}],
   "backends": [
     {
       "name": "{{.RABBITMQ_SERVICE}}",
