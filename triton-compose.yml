@@ -20,8 +20,6 @@ api:
     - RABBITMQ_SERVICE=rabbitmq
   expose:
     - 80
-  ports:
-    - 80
   restart: always
   labels:
     - triton.cns.services=exchange-books-api
