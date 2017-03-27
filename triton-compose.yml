@@ -1,6 +1,5 @@
 api:
   image: ringpartner/exchange-books
-  hostname: exchange-books-api
   mem_limit: "256m"
   environment:
     - NODE_PATH=/opt/app/lib
