@@ -63,6 +63,7 @@ services:
       - RABBITMQ_DEFAULT_PASS=guest
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_SERVICE=rabbitmq
+      - LOG_PROJECT_ID=ringpartner-exchange
     mem_limit: 512m
     volumes:
       - ./app/lib:/opt/app/lib
