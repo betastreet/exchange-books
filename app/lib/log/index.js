@@ -16,17 +16,18 @@ const log = bunyan.createLogger({
         //     level: 'trace',
         //     stream: process.stdout,
         // },
-        {
-            level: 'trace',
-            type: 'raw',
-            stream: ringbuffer,
-        }, {
-            type: 'rotating-file',
-            level: 'info',
-            path: `${logFile}.info.log`,
-            count,
-            period,
-        }, {
+        //{
+        //    level: 'trace',
+        //    type: 'raw',
+        //    stream: ringbuffer,
+        //}, {
+        //    type: 'rotating-file',
+        //    level: 'info',
+        //    path: `${logFile}.info.log`,
+        //    count,
+        //    period,
+        //},
+	{
             type: 'rotating-file',
             level: 'error',
             path: `${logFile}.error.log`,
