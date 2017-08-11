@@ -1,3 +1,4 @@
+global.Promise = require('bluebird');
 require('queue');
 require('database');
 const server = require('server')();
