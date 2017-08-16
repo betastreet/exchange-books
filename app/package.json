@@ -64,7 +64,7 @@
     "bail": true,
     "collectCoverage": true,
     "setupFiles": [
-      "jest-init.js"
+      "lib/jest-init.js"
     ]
   }
 }
