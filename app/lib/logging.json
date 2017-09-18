@@ -1,0 +1,6 @@
+{
+    "default": "info",
+    "modules": {
+        "your friendly module/file name": "fatal | error | warn | info | debug | trace"
+    }
+}
